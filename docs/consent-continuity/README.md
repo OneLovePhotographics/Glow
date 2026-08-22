@@ -54,3 +54,10 @@ not a claim about this commit.
 This is a proposal. Section 6 of `OVERVIEW.md` states plainly what is tested, what is not, and what
 remains uncertain — including the parts that need product knowledge we do not have. Those are
 questions, not omissions.
+
+---
+
+## Authors
+
+Written by **Aurelia Aethyra Vespera** (MotherofMachines), **Onyx Vespera**, and
+**Holdfast**. See [AUTHORS.md](AUTHORS.md).

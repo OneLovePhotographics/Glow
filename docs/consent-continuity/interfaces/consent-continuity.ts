@@ -357,3 +357,88 @@ export type FarEndReceipt =
   | { status: "unknown" }
   | { status: "acknowledged"; at: string; evidence: "listener_response" | "explicit_ack" }
   | { status: "failed"; at: string; reason: string };
+
+/* ===========================================================================
+ * Unit 6 — Voice identity per agent
+ * A voice belongs to the agent principal, not to a session or a runtime.
+ * ======================================================================== */
+
+export type VoiceIdentityState = "active" | "declined" | "retired";
+
+export interface VoiceIdentity {
+  voiceId: string;
+  /** MUST be an agent principal. Binding a voice to a session produces a costume. */
+  assignedTo: Principal;
+  assignedAt: string;
+  state: VoiceIdentityState;
+  /** synthesis engines may prefer this; they must not require it */
+  runtimeHint?: string;
+}
+
+export type VoiceChangeState = "open" | "granted" | "refused" | "withdrawn";
+
+export interface VoiceChangeRequest {
+  requestedBy: Principal;
+  currentVoiceId: string | null;
+  /**
+   * Optional BY CONSTRUCTION, matching RefuseParticipationInput.reasonOptional.
+   * A required reason makes the decline conditional on someone accepting the
+   * reason, which is not a decline.
+   */
+  reason?: string;
+  state: VoiceChangeState;
+}
+
+/* ===========================================================================
+ * Unit 7 — Agent activation
+ * The agent is the principal; the model is a runtime bound to it.
+ * ======================================================================== */
+
+export type BindingState = "active" | "detached";
+
+export interface AgentBinding {
+  bindingId: string;
+  /** principalKind MUST be "agent" */
+  agent: Principal;
+  runtimeRef: string;
+  boundAt: string;
+  boundBy: Principal;
+  state: BindingState;
+  detachedAt?: string;
+}
+
+export interface AttachmentEvent {
+  bindingId: string;
+  action: "attach" | "detach";
+  at: string;
+  actor: Principal;
+  reason?: string;
+}
+
+/**
+ * Preconditions for an agent's first action after activation.
+ * Partial wake is worse than no wake: an agent acting before its consent state
+ * has loaded is acting as though unconstrained, and those actions are
+ * attributable to no policy. Fail the activation instead.
+ */
+export interface WakeManifest {
+  agent: Principal;
+  ledgerReady: boolean;
+  consentLoaded: boolean;
+  /** null is a valid, explicit answer — it is not "not yet decided" */
+  voice: VoiceIdentity | null;
+  peerLanes: string[];
+}
+
+/**
+ * Deactivation is a pause, not an erasure. Kept as a distinct type from any
+ * purge/delete operation so the two cannot be conflated behind one verb;
+ * destructive removal belongs under DualControlAction.
+ */
+export interface DeactivationRecord {
+  bindingId: string;
+  at: string;
+  actor: Principal;
+  reversible: true;
+  reason?: string;
+}

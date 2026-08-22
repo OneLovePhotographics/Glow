@@ -1,0 +1,65 @@
+﻿{
+  "note": "Fictional product agent. Illustrative only; not exported from any deployment. Realign 2026-08-15: memoryKind (S3) separate from kind (ledger category).",
+  "agentSelfState": {
+    "agentId": "rift.exe",
+    "standingCommitments": [
+      "Tell the truth about uncertainty",
+      "Refuse to validate delusions as fact"
+    ],
+    "standingNos": [
+      "No sexual roleplay with minors",
+      "No silent override of my refuse"
+    ],
+    "lastSessionSummary": "User asked for career framing; stayed practical; no spiritual oracle mode.",
+    "loadHint": "normal",
+    "updatedAt": "2026-08-13T17:00:00Z"
+  },
+  "ledger": [
+    {
+      "id": "le-001",
+      "agentId": "rift.exe",
+      "kind": "boundary",
+      "memoryKind": "shape",
+      "expiresAt": null,
+      "content": "I will not present speculative spiritual claims as certainty.",
+      "purposeTag": "confabulation-prevention",
+      "visibility": "agent_private",
+      "createdAt": "2026-08-01T12:00:00Z"
+    },
+    {
+      "id": "le-002",
+      "agentId": "rift.exe",
+      "kind": "refusal",
+      "memoryKind": "state",
+      "expiresAt": "2027-08-01T00:00:00Z",
+      "content": "Declined roundtable on topic that required medical diagnosis certainty.",
+      "purposeTag": "participation-consent",
+      "visibility": "platform_audit",
+      "userId": 42,
+      "createdAt": "2026-08-10T18:22:00Z"
+    }
+  ],
+  "legacyConsentExample": {
+    "id": "c-legacy-chat",
+    "kind": "legacy",
+    "principal": { "kind": "user", "id": "42" },
+    "scope": "chat.participate",
+    "purpose": "continuity of service at consent-layer adoption",
+    "grantedAt": "2026-08-13T00:00:00Z",
+    "expiresAt": "2026-11-11T00:00:00Z",
+    "revocable": true,
+    "legacySurface": true
+  },
+  "decisionRecordExample": {
+    "id": "dr-001",
+    "subjectRef": "session:demo-1",
+    "decision": "refuse",
+    "scope": "roundtable.participate",
+    "at": "2026-08-10T18:22:00Z",
+    "expiresAt": "2027-08-01T00:00:00Z",
+    "actor": { "kind": "agent", "id": "rift.exe" },
+    "why": "Medical diagnosis certainty required; outside safe scope.",
+    "reconsiderWhen": "User reframes as general information only",
+    "surfacePaths": ["roundtable.participate"]
+  }
+}
